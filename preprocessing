@@ -1,0 +1,486 @@
+#%%
+import pandas as pd
+import geopandas as gpd
+import matplotlib.pyplot as plt
+#%%
+#POI
+#%%
+from pathlib import Path
+
+print(Path.cwd())
+#%%
+poi_1_path = Path("Data/POI/South_West_England/poi_6426709/poi_6426709.gpkg")
+df_poi1 = gpd.read_file(poi_1_path, engine="pyogrio")
+df_poi1.head()
+#%%
+
+#%%
+df_poi1.info()
+#%%
+from mpl_toolkits.axes_grid1 import make_axes_locatable
+#%%
+ax = df_poi1.plot(column="groupname", legend=True)
+ax.legend(title="Group Name")
+#%%
+#df_poi1 = df_poi1.to_crs(epsg=4326)
+
+#m = df_poi1.explore(
+#    tiles = "OpenStreetMap",
+#    marker_kwds = {"radius": 0.01},
+#    tooltips =True
+#)
+
+#m.save("poi1_map.html")
+#%%
+# Merge POI geopackages
+#%%
+from pathlib import Path
+import geopandas as gpd
+import pandas as pd
+
+poi_dir = Path("Data/POI/South_West_England")
+
+poi_files = sorted(poi_dir.rglob("*.gpkg"))
+
+print(f"Found {len(poi_files)} GeoPackage files")
+#%%
+# Check CRS of each POI files
+
+for file in poi_files:
+    gdf = gpd.read_file(file, engine="pyogrio")
+    print(file.name, gdf.crs)
+#%%
+# Combine all POIs
+
+poi_merge = []
+
+for file in poi_files:
+    gdf = gpd.read_file(file, engine="pyogrio")
+
+    # Keep the source file information
+    gdf["source_file"] = file.name
+    gdf["source_folder"] = file.parent.name
+
+    poi_merge.append(gdf)
+
+poi_all = gpd.GeoDataFrame(
+    pd.concat(poi_merge, ignore_index=True),
+    geometry="geometry",
+    crs=poi_merge[0].crs
+)
+
+print(poi_all.shape)
+poi_all.head()
+
+#%%
+# Check Duplicates
+#%%
+print("Duplicate ref_no:",
+      poi_all["ref_no"].duplicated().sum())
+#%%
+poi_all[
+    poi_all.duplicated(subset=["ref_no"], keep=False)
+].sort_values("ref_no")
+#%%
+# Drop Duplicates
+#%%
+poi_all_clean = poi_all.drop_duplicates(subset=["ref_no"],
+    keep="first"
+).reset_index(drop=True)
+#%%
+poi_all_clean
+#%%
+poi_all_clean[
+    poi_all_clean.duplicated(subset=["ref_no"], keep=False)
+].sort_values("ref_no")
+#%%
+# Checking for empty geometries
+#%%
+poi_all_clean[poi_all_clean['geometry'].is_empty == True]
+#%%
+# Save merged crime data
+#%%
+poi_merged_path = Path("Data/POI/South_West_England/poi_merged.gpkg")
+
+poi_all_clean.to_file(poi_merged_path, driver = "GPKG")
+#%%
+
+#%%
+
+#%%
+# Crime data
+#%%
+crime_avon_12_path = Path("Data/Crime_data/South_West_England/db59bec88ae366adc60eeb95c32acbaae6937ddf/2025-12/2025-12-avon-and-somerset-street.csv")
+df_crime_avon_12 = pd.read_csv(crime_avon_12_path, dtype="string", header=0)
+#%%
+df_crime_avon_12.head()
+#%%
+df_crime_avon_12.info()
+#%%
+# Merge Crime Data
+#%%
+import pandas as pd
+
+base_dir = Path(
+    "Data/Crime_data/South_West_England/"
+    "db59bec88ae366adc60eeb95c32acbaae6937ddf"
+)
+
+# Find every CSV inside all monthly subfolders
+crime_files = sorted(base_dir.rglob("*.csv"))
+
+print(f"Found {len(crime_files)} CSV files")
+#%%
+# Check if they have consistent columns
+
+column_sets = {
+    tuple(pd.read_csv(file, nrows=0).columns)
+    for file in crime_files
+}
+
+print(f"Number of different column structures: {len(column_sets)}")
+#%%
+# Merge all the files
+
+crime_all = pd.concat(
+    (
+        pd.read_csv(
+            file,
+            low_memory=False
+        ).assign(
+            source_month=file.parent.name,
+            source_file=file.name
+        )
+        for file in crime_files
+    ),
+    ignore_index=True
+)
+
+print(f"Merged shape: {crime_all.shape}")
+#%%
+# Save the merged crime data
+#%%
+crime_all[crime_all.Longitude.isna() == True].count()
+#%%
+print(crime_all[["Longitude", "Latitude"]].dtypes)
+#%%
+print(crime_all[["Longitude", "Latitude"]].head())
+#%%
+output_path = base_dir / "south_west_crime_2025.csv"
+crime_all.to_csv(output_path, index=False)
+
+print(f"Saved to: {output_path.resolve()}")
+#%%
+
+#%%
+
+#%%
+# MRN / Intersections
+#%%
+mrn_1_path = "C:/Users/rg25503/OneDrive - University of Bristol/Dissertation/Data/MRN_intersections/South_West_England/mrn_6426710/mrn_6426710.gpkg"
+#df_mrn1 = gpd.read_file(mrn_1_path, engine="pyogrio")
+#df_mrn1.head()
+#%%
+layers_mrn1 = gpd.list_layers(mrn_1_path)
+print(layers_mrn1)
+#%%
+layer_name_mrn1 = layers_mrn1["name"].iloc[0]
+#%%
+mrn1 = gpd.read_file(mrn_1_path, layer=layer_name_mrn1, engine="pyogrio")
+
+mrn1 = mrn1.to_crs(epsg=4326)
+#%%
+mrn1.info()
+#%%
+# Reading TransportNode layer
+#%%
+layer_name_mrn1_node = layers_mrn1["name"].iloc[1]
+mrn_node = gpd.read_file(mrn_1_path, layer=layer_name_mrn1_node, engine="pyogrio")
+#%%
+mrn_node.head()
+#%%
+mrn_node['os_nodetype'].unique()
+#%%
+#m_mrn = mrn1.explore(
+#    tiles = "OpenStreetMap",
+#    #marker_kwds = {"radius": 0.05},
+#    tooltip =True
+#)
+
+#m_mrn.save("mrn1_map.html")
+#%%
+# MRN Files
+#%%
+mrn_dir = Path("Data/MRN_intersections/South_West_England")
+
+mrn_files = sorted(mrn_dir.rglob("*.gpkg"))
+
+print(f"Found {len(mrn_files)} GeoPackage files")
+#%%
+# Merge MRN - TransportNode
+#%%
+
+#%%
+import pyogrio
+
+for file in mrn_files:
+    info = pyogrio.read_info(file, layer="TransportNode")
+    print(f"{file.name}: {info['crs']}")
+#%%
+mrn_node_merge = []
+
+for file in mrn_files:
+    gdf_mrn_node = gpd.read_file(file, layer= 'TransportNode', engine="pyogrio")
+
+    # Keep the source file information
+    gdf_mrn_node["source_file"] = file.name
+    gdf_mrn_node["source_folder"] = file.parent.name
+
+    mrn_node_merge.append(gdf_mrn_node)
+
+mrn_node_all = gpd.GeoDataFrame(
+    pd.concat(mrn_node_merge, ignore_index=True),
+    geometry="geometry",
+    crs=mrn_node_merge[0].crs
+)
+
+print(mrn_node_all.shape)
+mrn_node_all.head()
+#%%
+# Remove Duplicates
+#%%
+dup_node = mrn_node_all.duplicated(
+    subset=['nodeid', 'geometry'],
+    keep=False
+)
+
+print("Rows in duplicate groups:", dup_node.sum())
+#%%
+mrn_node_all_clean = mrn_node_all.drop_duplicates(
+    subset=['nodeid', 'geometry'],
+    keep="first"
+).reset_index()
+#%%
+mrn_node_all_clean.head()
+#%%
+mrn_node_all_clean.info()
+#%%
+# Merge MRN - TransportLink
+#%%
+# check the CRS from metadata
+
+import pyogrio
+
+for file in mrn_files:
+    info = pyogrio.read_info(file, layer="TransportLink")
+    print(f"{file.name}: {info['crs']}")
+#%%
+# Combine all MRNs
+
+mrn_merge = []
+
+for file in mrn_files:
+    gdf_mrn = gpd.read_file(file, layer= 'TransportLink', engine="pyogrio")
+
+    # Keep the source file information
+    gdf_mrn["source_file"] = file.name
+    gdf_mrn["source_folder"] = file.parent.name
+
+    mrn_merge.append(gdf_mrn)
+
+mrn_all = gpd.GeoDataFrame(
+    pd.concat(mrn_merge, ignore_index=True),
+    geometry="geometry",
+    crs=mrn_merge[0].crs
+)
+
+print(mrn_all.shape)
+mrn_all.head()
+#%%
+# Check duplicated rows
+
+mrn_subset = [
+    "wayid",
+    "os_parentid",
+    "os_startnode",
+    "os_endnode",
+    "geometry"
+]
+
+for col in mrn_subset:
+    print(col)
+    print("Unique:", mrn_all[col].nunique())
+    print("Duplicates:", mrn_all[col].duplicated().sum())
+    print()
+#%%
+dup = mrn_all.duplicated(
+    subset=mrn_subset,
+    keep=False
+)
+
+print("Rows in duplicate groups:", dup.sum())
+#%%
+print("Duplicate wayid:",
+      mrn_all["wayid"].duplicated().sum())
+#%%
+# Drop duplicates
+
+mrn_all_clean = mrn_all.drop_duplicates(
+    subset=mrn_subset,
+    keep="first"
+)
+#%%
+mrn_all_clean.head()
+#%%
+mrn_all_clean['highway'].unique()
+#%%
+# Types of Roads that are going to be used:
+# - since it incorporates roads with high mobility and also roads within residential areas, these roads will be necessary to add:
+# > primary, primary_link, secondary, secondary_link, tertiary, tertiary_link, residential, unclassified.
+#%%
+# Filter TransportLink
+#%%
+road_list = ['primary', 'primary_link', 'secondary', 'secondary_link', 'tertiary', 'tertiary_link', 'residential', 'unclassified']
+
+road_selected = mrn_all_clean[mrn_all_clean['highway'].isin(road_list)].reset_index()
+#%%
+road_selected.info()
+#%%
+road_selected[road_selected['geometry'].isna() == True].count()
+#%%
+road_selected["geometry_key"] = road_selected.geometry.normalize().to_wkb()
+
+road_selected = road_selected.drop_duplicates(
+    subset=["geometry_key"]
+).drop(columns="geometry_key")
+#%%
+print("Remaining edges:", len(road_selected)) # no duplicates
+#%%
+road_selected.head()
+#%%
+road_selected[road_selected['os_startnode'].isin(road_selected['os_endnode']) == True]
+#%%
+# Calculating node degree
+
+node_degree = (
+    pd.concat(
+        [
+            road_selected["os_startnode"],
+            road_selected["os_endnode"]
+        ],
+        ignore_index=True
+    )
+    .dropna()
+    .value_counts()
+    .rename_axis("startnode-endnode")
+    .reset_index(name="degree")
+)
+#%%
+node_degree['os_parentid'] = road_selected['os_parentid']
+
+node_degree = node_degree[['os_parentid', 'startnode-endnode', 'degree']]
+#%%
+node_degree.info()
+#%%
+node_degree.head()
+#%%
+endpoint_ids = pd.Index(
+    pd.concat(
+        [
+            road_selected["os_startnode"],
+            road_selected["os_endnode"]
+        ],
+        ignore_index=True
+    )
+    .dropna()
+    .astype("string")
+    .str.strip()
+    .unique()
+)
+
+node_parentids = pd.Index(
+    mrn_node_all_clean["os_parentid"]
+    .dropna()
+    .astype("string")
+    .str.strip()
+    .unique()
+)
+
+matched_ids = endpoint_ids.intersection(node_parentids)
+unmatched_ids = endpoint_ids.difference(node_parentids)
+
+print("Unique endpoints in filtered links:", len(endpoint_ids))
+print("Matched to TransportNode:", len(matched_ids))
+print("Unmatched endpoints:", len(unmatched_ids))
+print(f"Match rate: {len(matched_ids) / len(endpoint_ids) * 100:.2f}%")
+#%%
+# Make copies to avoid changing the original datasets
+node_degree_copy = node_degree.copy()
+node_all_clean_copy = mrn_node_all_clean.copy()
+
+# Standardise both ID columns
+node_degree_copy["startnode-endnode"] = (
+    node_degree_copy["startnode-endnode"]
+    .astype("string")
+    .str.strip()
+)
+
+node_all_clean_copy["os_parentid"] = (
+    node_all_clean_copy["os_parentid"]
+    .astype("string")
+    .str.strip()
+)
+#%%
+node_all_clean_copy.duplicated(subset=['os_parentid']).sum()
+#%%
+node_all_clean_copy = node_all_clean_copy.drop_duplicates(
+    subset="os_parentid").reset_index()
+#%%
+node_all_clean_copy.info()
+#%%
+# Calculate Node Degree
+#%%
+node_degree_geom = node_degree_copy.merge(
+    node_all_clean_copy[["os_parentid", "nodeid", "geometry"]],
+    left_on="startnode-endnode",
+    right_on="os_parentid",
+    how="left",
+    validate="one_to_one"
+)
+
+node_degree_geom = gpd.GeoDataFrame(
+    node_degree_geom,
+    geometry="geometry",
+    crs=node_all_clean_copy.crs
+)
+#%%
+node_degree_geom.head()
+#%%
+node_degree_geom.info()
+#%%
+# Getting intersections (node degree >= 3)
+#%%
+intersections_data = node_degree_geom[
+    node_degree_geom["degree"] >= 3
+].copy()
+#%%
+intersections_data.tail()
+#%%
+intersections_data[intersections_data.geometry.is_empty == True].count()
+#%%
+intersections_data.info()
+#%%
+
+#%%
+# Save intersection density data
+#%%
+intersections_merged_path = Path("Data/MRN_intersections/South_West_England/intersections_merged.gpkg")
+
+intersections_data.to_file(intersections_merged_path, driver = "GPKG")
+#%%
+
+#%%
+
+#%%
+
+#%%
