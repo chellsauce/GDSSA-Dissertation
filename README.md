@@ -1,7 +1,9 @@
 # A Master's Dissertation Project
 ### Geography of Crime in South West England: Built-Environment and Socioeconomic Associations in A Spatial Regression Framework
 
+
 A lot of topics actually came into my mind during my MSc coursework when thinking about what I should do for my dissertation. But then when I was introduced about spatial dependency last year in one of my courses, I couldn't help but think that it's an interesting topic, and I was intrigued to investigate more. So, here it is; a project examined the geographical distribution of recorded crime across South West England and its associations with built-environment and socioeconomic characteristics.
+
 
 **Research area:** South West England, UK  
 **Spatial unit:** Lower Layer Super Output Areas (LSOAs)  
@@ -10,29 +12,30 @@ A lot of topics actually came into my mind during my MSc coursework when thinkin
 
 ---
 
-## 1. Project Overview
+## Project Overview
 
 As we may know, crime is not distributed evenly across geographical areas. Differences in the built environment, land use, accessibility and socioeconomic conditions may be associated with variations in crime patterns. This project investigates the geography of recorded crime across South West England, exploring how built-environment characteristics and socioeconomic conditions are associated with crime density. Using spatial data integration, exploratory spatial analysis and spatial regression techniques, the research examines geographical patterns and accounts for spatial dependence between neighbouring areas.
 
 The analysis itself focuses on understanding these spatial associations rather than establishing causal effects study.
 
-## 2. Research Questions
+## Research Questions
 
 Here are the research questions:
 
 1. What spatial patterns and associations are evident among crime density, built-environment characteristics, and socioeconomic deprivation across LSOAs in South West England?
 2. To what extent do built-environment characteristics and socioeconomic deprivation included in this study contribute to explaining variation in crime density across LSOAs in South West England?
 
-## 3. Study Area
+## Study Area
 
 The study covers South West England, using Lower Layer Super Output Areas (LSOAs) as the unit of spatial analysis.
 
 The initial study area contained 3,407 LSOAs. One area (the Isles of Scilly) was excluded from the modelling dataset because of its incompatibility with the Queen contiguity spatial weights specification, resulting in final 3,406 LSOAs as modelling units.
 
+[Figure 1 - Study Area Map]
 
 ![Study area map](folders/images/study_area.png)
 
-## 4. Data Sources and Variables
+## Data Sources and Variables
 
 The analysis integrates crime, built-environment and socioeconomic datasets.
 
@@ -53,11 +56,11 @@ The Points of Interest dataset was organised into nine categories to represent d
 
 **Note:** The original datasets are not included in this repository unless their redistribution permissions explicitly allow it. Please refer to the original data providers for access.
 
-## 5. Analytical Workflow
+## Analytical Workflow
 
 The project followed a series of data processing, spatial analysis and modelling stages.
 
-### 5.1 Data Preparation and Integration
+### Data Preparation and Integration
 
 - Processed and cleaned recorded crime data.
 - Prepared geographical datasets and harmonised spatial reference systems.
@@ -67,7 +70,7 @@ The project followed a series of data processing, spatial analysis and modelling
 - Integrated socioeconomic and population characteristics.
 - Prepared the final modelling dataset.
 
-### 5.2 Exploratory Spatial Analysis
+### Exploratory Spatial Analysis
 
 Exploratory analysis was conducted to understand the distribution of crime and explanatory variables across the study area.
 
@@ -86,7 +89,7 @@ This included:
 
 ![Exploratory analysis](figures/exploratory_analysis.png)
 
-### 5.3 Spatial Regression Modelling
+### Spatial Regression Modelling
 
 The modelling stage examined associations between crime density and the selected explanatory variables.
 
@@ -100,7 +103,7 @@ The analysis included:
 
 The modelling process also considered multicollinearity when selecting explanatory variables. For example, the Employment Deprivation Rank was excluded because of its strong correlation with the Income Deprivation Rank.
 
-### 5.4 Model Diagnostics
+### Model Diagnostics
 
 Model diagnostics were used to assess the extent to which spatial dependence remained after regression modelling.
 
@@ -110,7 +113,7 @@ Global Moran's I was used to examine spatial autocorrelation in the model residu
 
 ![Model diagnostics](figures/model_diagnostics.png)
 
-## 6. Key Findings
+## Key Findings
 
 The analysis identified substantial geographical variation in recorded crime density across South West England.
 
