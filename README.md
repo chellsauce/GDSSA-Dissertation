@@ -1,5 +1,4 @@
-# The Geography of Crime in South West England
-### Investigating Built-Environment and Socioeconomic Associations Using Spatial Regression
+# Geography of Crime in South West England: Built-Environment and Socioeconomic Associations in A Spatial Regression Framework
 
 A spatial data science project examining the geographical distribution of recorded crime across South West England and its associations with built-environment and socioeconomic characteristics.
 
