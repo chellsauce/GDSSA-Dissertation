@@ -154,4 +154,4 @@ The spatial regression analysis highlighted the importance of accounting for spa
 
 ## 8. Limitations
 
-Several considerations are important
+
