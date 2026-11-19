@@ -1,6 +1,7 @@
-# Geography of Crime in South West England: Built-Environment and Socioeconomic Associations in A Spatial Regression Framework
+# A Master's Dissertation Project
+### Geography of Crime in South West England: Built-Environment and Socioeconomic Associations in A Spatial Regression Framework
 
-A spatial data science project examining the geographical distribution of recorded crime across South West England and its associations with built-environment and socioeconomic characteristics.
+A lot of topics actually came into my mind during my MSc coursework when thinking about what I should do for my dissertation. But then when I was introduced about spatial dependency last year in one of my courses, I couldn't help but think that it's an interesting topic, and I was intrigued to investigate more. So, here it is; a project examined the geographical distribution of recorded crime across South West England and its associations with built-environment and socioeconomic characteristics.
 
 **Research area:** South West England, UK  
 **Spatial unit:** Lower Layer Super Output Areas (LSOAs)  
@@ -11,23 +12,16 @@ A spatial data science project examining the geographical distribution of record
 
 ## 1. Project Overview
 
-Crime is not distributed evenly across geographical areas. Differences in the built environment, land use, accessibility and socioeconomic conditions may be associated with variations in crime patterns.
+As we may know, crime is not distributed evenly across geographical areas. Differences in the built environment, land use, accessibility and socioeconomic conditions may be associated with variations in crime patterns. This project investigates the geography of recorded crime across South West England, exploring how built-environment characteristics and socioeconomic conditions are associated with crime density. Using spatial data integration, exploratory spatial analysis and spatial regression techniques, the research examines geographical patterns and accounts for spatial dependence between neighbouring areas.
 
-This project investigates the geography of recorded crime across South West England, exploring how built-environment characteristics and socioeconomic conditions are associated with crime density.
+The analysis itself focuses on understanding these spatial associations rather than establishing causal effects study.
 
-Using spatial data integration, exploratory spatial analysis and spatial regression techniques, the research examines geographical patterns and accounts for spatial dependence between neighbouring areas.
+## 2. Research Questions
 
-The analysis focuses on understanding these spatial relationships rather than establishing causal effects.
+Here are the research questions:
 
-## 2. Research Objectives
-
-The main objectives were to:
-
-- Examine the geographical distribution and spatial patterns of recorded crime across South West England.
-- Investigate associations between crime density and built-environment characteristics.
-- Explore the relationship between socioeconomic conditions and crime density.
-- Assess spatial autocorrelation and the implications of spatial dependence for regression modelling.
-- Compare conventional regression with spatial regression approaches.
+1. What spatial patterns and associations are evident among crime density, built-environment characteristics, and socioeconomic deprivation across LSOAs in South West England?
+2. To what extent do built-environment characteristics and socioeconomic deprivation included in this study contribute to explaining variation in crime density across LSOAs in South West England?
 
 ## 3. Study Area
 
@@ -35,7 +29,6 @@ The study covers South West England, using Lower Layer Super Output Areas (LSOAs
 
 The initial study area contained 3,407 LSOAs. One area (the Isles of Scilly) was excluded from the modelling dataset because of its incompatibility with the Queen contiguity spatial weights specification, resulting in 3,406 modelling units.
 
-[Insert study area map here]
 
 ![Study area map](figures/study_area.png)
 
