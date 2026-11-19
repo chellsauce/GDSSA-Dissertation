@@ -2,7 +2,7 @@
 ### Geography of Crime in South West England: Built-Environment and Socioeconomic Associations in A Spatial Regression Framework
 
 
-A lot of topics actually came into my mind during my MSc coursework when thinking about what I should do for my dissertation. But then when I was introduced about spatial dependency last year in one of my courses, I couldn't help but think that it's an interesting topic, and I was intrigued to investigate more. So, here it is; a project examined the geographical distribution of recorded crime across South West England and its associations with built-environment and socioeconomic characteristics.
+A lot of topics actually came into my mind during my MSc coursework when thinking about what I should do for my dissertation. But then when I was introduced about spatial dependency last year in one of my courses, I couldn't help but think that it's an interesting topic, and I was intrigued to investigate it more. So, here it is; a project examined the geographical distribution of recorded crime across South West England and its associations with built-environment and socioeconomic characteristics.
 
 
 **Research area:** South West England, UK  
@@ -29,11 +29,10 @@ Here are the research questions:
 
 The study covers South West England, using Lower Layer Super Output Areas (LSOAs) as the unit of spatial analysis.
 
-The initial study area contained 3,407 LSOAs. One area (the Isles of Scilly) was excluded from the modelling dataset because of its incompatibility with the Queen contiguity spatial weights specification, resulting in final 3,406 LSOAs as modelling units.
-
-[Figure 1 - Study Area Map]
+The initial study area contained 3,407 LSOAs. An area (the Isles of Scilly) was excluded from the modelling dataset because of its incompatibility with the Queen contiguity spatial weights specification, resulting in final 3,406 LSOAs as modelling units.
 
 ![Study area map](folders/images/study_area.png)
+<h3 align="center">Figure 1 - Study Area Map</h3>
 
 ## Data Sources and Variables
 
@@ -48,13 +47,28 @@ The analysis integrates crime, built-environment and socioeconomic datasets.
 | Socioeconomic conditions | IMD 2025 Income Rank | Represent income-related deprivation |
 | Population characteristics | Population density | Control variable |
 
-The crime dataset contained approximately 1.46 million records before aggregation and processing.
+The selection of the three built environment characteristics was informed by a multidimensional conceptualization of built-environment through ‘density’, ‘diversity’, and ‘design’, which was proposed by Cervero and Kockelman (1997). As for the socioeconomic conditions, there are other several indicators but dropped due to some considerations.
 
-The dependent variable was constructed as crime density per square kilometre.
+**_Dependent Variable_**
 
-The Points of Interest dataset was organised into nine categories to represent different types of facilities and activities across the study area.
+The South West England 2025 crime dataset was collected as a monthly dataset, then merged to obtain an annual dataset which consists of 1.46 million records before aggregation and processing. The dependent variable was constructed from this crime dataset as crime density, which is counted crime incidents per square kilometer in one LSOA. 
 
-**Note:** The original datasets are not included in this repository unless their redistribution permissions explicitly allow it. Please refer to the original data providers for access.
+**_Independent Variable_**
+
+A. Built environment characteristics:
+
+1. POIs
+
+The Points of Interest (POIs) dataset was collected from Digimap, an online map and data delivery service that is operated by EDINA at University of Edinburgh. The POIs was organised into nine categories as its initial construction to represent different types of facilities and activities across the study area. A few datasets of POIs had to be merged to cover South West England area then filtered to ensure the consistency of the geometrical boundaries; more than 391k data points were obtained.
+
+2. Intersection Density
+
+This data was generated from OS Multi-modal Routing Network (MRN) data, also collected from Digimap. OS MRN data consists of a fully connected routable network which is described by Transport Node, a point spatial object that constructs the Transport Network. Since this study is focused on neighborhood area, the nodes were filtered based on that, then the nodes which are connected to three or more nodes were selected as street junction/intersection.
+
+3. Spatial Signatures
+
+A spatial data called ‘Spatial Signatures’ that combines urban form and function context was incorporated in this research, derived by Fleischmann & Arribas-Bel, 2021. 
+
 
 ## Analytical Workflow
 
