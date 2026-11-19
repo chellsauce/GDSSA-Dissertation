@@ -49,7 +49,7 @@ The analysis integrates crime, built-environment and socioeconomic datasets.
 
 The selection of the three built environment characteristics was informed by a multidimensional conceptualization of built-environment through ‘density’, ‘diversity’, and ‘design’, which was proposed by Cervero and Kockelman (1997). As for the socioeconomic conditions, there are other several indicators but dropped due to some considerations.
 
-**_Dependent Variable_**
+**_Dependent Variable (Crime Density)_**
 
 The South West England 2025 crime dataset was collected as a monthly dataset, then merged to obtain an annual dataset which consists of 1.46 million records before aggregation and processing. The dependent variable was constructed from this crime dataset as crime density, which is counted crime incidents per square kilometer in one LSOA. 
 
@@ -67,12 +67,22 @@ This data was generated from OS Multi-modal Routing Network (MRN) data, also col
 
 3. Spatial Signatures
 
-A spatial data called ‘Spatial Signatures’ that combines urban form and function context was incorporated in this research, derived by Fleischmann & Arribas-Bel, 2021. 
+A spatial data called ‘Spatial Signatures’ that combines urban form and function context was incorporated in this research, derived by Fleischmann & Arribas-Bel, 2021. Spatial Signatures reflect distinction between three broader groups that represent countryside, suburban low density development, and dense city centres, which then was adopted in this study and referred to as rural, suburban, and urban areas.
+
+B. Socioeconomic Deprivation
+
+Income Rank and Employment Rank were initially considered as socioeconomic deprivation indicators at LSOA level. However, Employment Rank was subsequently excluded during feature selection, which will be explained in later section. Income Deprivation Domain, such as Income Rank and Employment Rank, captures the distribution of residents experiencing deprivation related to low income, which can be associated to weaker social control thus exposed to higher risk of crime. The data were collected from 2025 Indices of Deprivation.
+
+**_Control Variable (Population Density)_**
+
+A control variable is a variable that is introduced to the model to account for potential confounding influences when estimating relationships between predictors and the response variable (Memon et al., 2024), that is population density in this study.
 
 
 ## Analytical Workflow
 
 The project followed a series of data processing, spatial analysis and modelling stages.
+
+![Analytical Workflow](folders/images/flowchart-research-2.png)
 
 ### Data Preparation and Integration
 
