@@ -31,8 +31,9 @@ The study covers South West England, using Lower Layer Super Output Areas (LSOAs
 
 The initial study area contained 3,407 LSOAs. An area (the Isles of Scilly) was excluded from the modelling dataset because of its incompatibility with the Queen contiguity spatial weights specification, resulting in final 3,406 LSOAs as modelling units.
 
-![Study area map](folders/images/study_area.png)
-<h3 align="center">Figure 1 - Study Area Map</h3>
+<img src="folders/images/study_area.png" alt="Study Area Map" width="900">
+
+<h4 align="center">Figure 1 - Study Area Map</h4>
 
 ## Data Sources and Variables
 
@@ -80,38 +81,58 @@ A control variable is a variable that is introduced to the model to account for 
 
 ## Analytical Workflow
 
-The project followed a series of data processing, spatial analysis and modelling stages.
+The project followed a series of complex and intricate data execution, which then summarised as data processing, spatial analysis and modelling stages.
 
-![Analytical Workflow](folders/images/flowchart-research-2.png)
+<img src="folders/images/flowchart_research-2.png" alt="Analytical Workflow" width="960">
 
-### Data Preparation and Integration
+<h4 align="center">Figure 2 - Analytical Workflow</h4>
 
-- Processed and cleaned recorded crime data.
-- Prepared geographical datasets and harmonised spatial reference systems.
-- Aggregated crime records to LSOA boundaries.
-- Processed Points of Interest data into nine built-environment categories.
-- Constructed road network intersection density indicators.
-- Integrated socioeconomic and population characteristics.
-- Prepared the final modelling dataset.
+### Data Preprocessing
 
-### Exploratory Spatial Analysis
+For each dataset, the preprocessing was quite similar. The initial check consists of data cleaning; checking duplicates, null values, and data consistency, then merging datasets per variable. Afterwards, aggregated each dataset to LSOA boundaries, then integrated them into one final dataset.
 
-Exploratory analysis was conducted to understand the distribution of crime and explanatory variables across the study area.
 
-This included:
+### Exploratory Analysis
 
-- Mapping geographical variations in crime density.
-- Examining the distribution of built-environment characteristics.
-- Exploring socioeconomic patterns.
-- Assessing global spatial autocorrelation using Moran's I.
+Exploratory analysis was conducted to understand the spatial and statistical distribution of each variable across the study area.
 
-[Insert crime density map here]
+#### Descriptive Statistics
 
-![Crime density map](figures/crime_density_map.png)
+Here is the descriptive statistics of the variables:
 
-[Insert selected exploratory visualisation here]
+<img src="folders/images/descriptive_stats2.png" alt="Exploratory analysis" width="840">
 
-![Exploratory analysis](figures/exploratory_analysis.png)
+<h4 align="center">Figure 3 - Descriptive Statistics</h4>
+
+Based on the descriptive statistics, most of the variables have high positive skewness. In order to regulate the highly irregular distribution of some variables, a variable transformation is carried out with log transformation, log(1+x), denote by log1p.
+
+Here is the transformation result.
+
+<img src="folders/images/hist_transformed.png" alt="Exploratory analysis2" width="840">
+
+<h4 align="center">Figure 4 - POI group variables & the crime density variable before and after transformation</h4>
+
+#### Spatial Distribution
+
+The spatial distribution of several variables is shown to identify potential patterns of geographical correspondence, which the four variables exhibited widely similar spatial distributions.
+
+<img src="folders/images/crime_public-infra_intersection_pop_density.png" alt="Four variables map" width="840">
+
+<h4 align="center">Figure 5 - Spatial Distribution of Crime Density, Public Infrastructure POI Density, Intersection Density, and Population Density across South West England</h4>
+
+Then the spatial autocorrelation of the dependent variable is visualized with LISA Map.
+
+<img src="folders/images/lisa_map-diss.png" alt="Spatial_autocorrelation" width="840">
+
+<h4 align="center">Figure 6 - LISA Map of Crime Density</h4>
+
+### Feature Selection
+
+A multicollinearity test was then carried out with Pearson correlation heatmap.
+
+<img src="folders/images/corr_mat2.png" alt="Correlation Map" width="840">
+
+<h4 align="center">Figure 7 - Multicollinearity Estimation of selected predictors</h4>
 
 ### Spatial Regression Modelling
 
@@ -127,15 +148,19 @@ The analysis included:
 
 The modelling process also considered multicollinearity when selecting explanatory variables. For example, the Employment Deprivation Rank was excluded because of its strong correlation with the Income Deprivation Rank.
 
+<img src="folders/images/model_comparison2.png" alt="Regression Models comp" width="840">
+
+<h4 align="center">Figure 8 - Comparison between Regression Models</h4>
+
 ### Model Diagnostics
 
 Model diagnostics were used to assess the extent to which spatial dependence remained after regression modelling.
 
-Global Moran's I was used to examine spatial autocorrelation in the model residuals, alongside comparisons of model performance.
+Moran's I was used to examine spatial autocorrelation in the model residuals, alongside comparisons of model performance.
 
-[Insert model diagnostics figure here]
+<img src="folders/images/model_comparison_blockwise.png" alt="Blockwise Models comp" width="840">
 
-![Model diagnostics](figures/model_diagnostics.png)
+<h4 align="center">Figure 9 - Comparison between Blockwise Models</h4>
 
 ## Key Findings
 
