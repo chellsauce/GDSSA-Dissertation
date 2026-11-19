@@ -4,7 +4,7 @@
 
 A lot of topics actually came into my mind during my MSc coursework when thinking about what I should do for my dissertation. But then when I was introduced about spatial dependency last year in one of my courses, I couldn't help but think that it's an interesting topic, and I was intrigued to investigate it more. So, here it is; a project examined the geographical distribution of recorded crime across South West England and its associations with built-environment and socioeconomic characteristics.
 
-
+Several study highlights:
 **Research area:** South West England, UK  
 **Spatial unit:** Lower Layer Super Output Areas (LSOAs)  
 **Study period:** 2025  
