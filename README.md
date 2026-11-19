@@ -27,10 +27,10 @@ Here are the research questions:
 
 The study covers South West England, using Lower Layer Super Output Areas (LSOAs) as the unit of spatial analysis.
 
-The initial study area contained 3,407 LSOAs. One area (the Isles of Scilly) was excluded from the modelling dataset because of its incompatibility with the Queen contiguity spatial weights specification, resulting in 3,406 modelling units.
+The initial study area contained 3,407 LSOAs. One area (the Isles of Scilly) was excluded from the modelling dataset because of its incompatibility with the Queen contiguity spatial weights specification, resulting in final 3,406 LSOAs as modelling units.
 
 
-![Study area map](figures/study_area.png)
+![Study area map](folders/images/study_area.png)
 
 ## 4. Data Sources and Variables
 
@@ -40,8 +40,8 @@ The analysis integrates crime, built-environment and socioeconomic datasets.
 |---|---|---|
 | Recorded crime | Police-recorded crime data (2025) | Dependent variable |
 | Built environment | Points of Interest (POI) categories | Represent local facilities and activities |
-| Transport infrastructure | Intersection Density derived from OS MRN data | Represent road network characteristics |
-| Land-use characteristics | ONS Spatial Signatures | Represent broader urban morphology characteristics |
+| Built environment | Intersection Density derived from OS MRN data | Represent road network characteristics |
+| Built environment | ONS Spatial Signatures | Represent broader urban morphology characteristics |
 | Socioeconomic conditions | IMD 2025 Income Rank | Represent income-related deprivation |
 | Population characteristics | Population density | Control variable |
 
