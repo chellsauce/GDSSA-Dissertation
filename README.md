@@ -101,7 +101,7 @@ Exploratory analysis was conducted to understand the spatial and statistical dis
 
 Here is the descriptive statistics of the variables:
 
-<img src="folders/images/descriptive_stats2.png" alt="Exploratory analysis" width="840">
+<img src="folders/images/descriptive_stats.png" alt="Exploratory analysis" width="840">
 
 <h4 align="center">Figure 3 - Descriptive Statistics</h4>
 
@@ -109,7 +109,7 @@ Based on the descriptive statistics, most of the variables have high positive sk
 
 Here is the transformation result.
 
-<img src="folders/images/hist_transformed.png" alt="Exploratory analysis2" width="840">
+<img src="folders/images/hist_transformed2.png" alt="Exploratory analysis2" width="840">
 
 <h4 align="center">Figure 4 - POI group variables & the crime density variable before and after transformation</h4>
 
@@ -131,7 +131,7 @@ Then the spatial autocorrelation of the dependent variable is visualized with LI
 
 A multicollinearity test was then carried out with Pearson correlation heatmap.
 
-<img src="folders/images/corr_mat2.png" alt="Correlation Map" width="840">
+<img src="folders/images/corr_mat.png" alt="Correlation Map" width="840">
 
 <h4 align="center">Figure 7 - Multicollinearity Estimation of selected predictors</h4>
 
